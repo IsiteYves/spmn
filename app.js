@@ -18,14 +18,14 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Supamenu APIs!" });
 });
 
-app.use(function (req, res) {
-  return res.status(404).json({ error: "Resource not found" });
-});
-
 require("./routes/menu.route")(app);
 require("./routes/user.route")(app);
 require("./routes/resto.route")(app);
 require("./routes/table.route")(app);
 require("./routes/order.route")(app);
+
+app.use(function (req, res) {
+  return res.status(404).json({ error: "Resource not found" });
+});
 
 module.exports = app;
