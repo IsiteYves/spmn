@@ -1,7 +1,7 @@
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 const app = require("./app");
 
@@ -11,25 +11,29 @@ const host = process.env.HOST || "localhost";
 
 const swaggerOptions = {
   swaggerDefinition: {
-      info: {
-          title: "Vehicle Tracking Management System API Documentation",
-          version: "1.0.0",
-          description: "Explore the Vehicle Tracking Management System",
+    info: {
+      title: "Supamenu API Documentation",
+      version: "1.0.0",
+      description: "Explore the Supamenu",
+    },
+    schemes: [process.env.NODE_ENV === "production" ? "https" : "http"],
+    host: host + ":" + PORT,
+    basePath: "/api",
+    securityDefinitions: {
+      bearerAuth: {
+        type: "apiKey",
+        name: "Authorization",
+        scheme: "bearer",
+        in: "header",
       },
-      schemes: [process.env.NODE_ENV === "production" ? "https" : "http"],
-      host: host+":"+PORT,
-      basePath: "/api",
-      securityDefinitions: {
-          bearerAuth: {
-              type: "apiKey",
-              name: "Authorization",
-              scheme: "bearer",
-              in: "header",
-          },
-      },
+    },
   },
-  apis: ["../Auth_project/routes/**/*.js", "../Auth_project/controllers/**/**/*.js",
-      "../Auth_project/models/**/*.js", "../Auth_project/models/**/**/*.js"],
+  apis: [
+    "../Auth_project/routes/**/*.js",
+    "../Auth_project/controllers/**/**/*.js",
+    "../Auth_project/models/**/*.js",
+    "../Auth_project/models/**/**/*.js",
+  ],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
