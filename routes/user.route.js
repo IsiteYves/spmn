@@ -7,7 +7,7 @@ const {
   loginUser,
   getCurrentUser,
 } = require("../controllers/user.controllers");
-const { auth } = require("../middlewares/auth.middleware");
+const { checkAuth } = require("../middlewares/auth.middleware");
 
 module.exports = (app) => {
   var router = require("express").Router();
@@ -69,11 +69,11 @@ module.exports = (app) => {
      *       500:
      *         description: Internal Server Error
      */
-    .get(getAllUsers);
+    .get(checkAuth, getAllUsers);
 
   router
     .route("/:id")
-    .put(updateUser)
+    .put(checkAuth, updateUser)
     .get(getUserById)
 
     /**
@@ -97,7 +97,7 @@ module.exports = (app) => {
      *       500:
      *         description: Internal Server Error
      */
-    .delete(deleteUser);
+    .delete(checkAuth, deleteUser);
 
   router
     .route("/current")

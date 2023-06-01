@@ -1,18 +1,22 @@
-const { updateRestoTable, createRestoTable, deleteRestoTable, getAllRestoTables, getSingleRestoTable } = require("../controllers/table.controller");
+const {
+  updateRestoTable,
+  createRestoTable,
+  deleteRestoTable,
+  getAllRestoTables,
+  getSingleRestoTable,
+} = require("../controllers/table.controller");
+const { checkAuth } = require("../middlewares/auth.middleware");
 
 module.exports = (app) => {
-    var router = require("express").Router();
+  var router = require("express").Router();
 
-    router.route("/")
-        .post(createRestoTable)
-    router.route("/:tableId")
-        .put(updateRestoTable)
-    router.route("/all/:restaurantId")
-        .get(getAllRestoTables)
-    router.route('/:restaurantId/:tableId')
-        .delete(deleteRestoTable)
-        .get(getSingleRestoTable)
+  router.route("/").post(checkAuth, createRestoTable);
+  router.route("/:tableId").put(checkAuth, updateRestoTable);
+  router.route("/all/:restaurantId").get(getAllRestoTables);
+  router
+    .route("/:restaurantId/:tableId")
+    .delete(checkAuth, deleteRestoTable)
+    .get(getSingleRestoTable);
 
-
-    app.use("/api/tables", router);
+  app.use("/api/tables", router);
 };
