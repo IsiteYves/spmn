@@ -4,18 +4,16 @@ const {
   deleteUser,
   getAllUsers,
   getUserById,
-  userLogin,
-  getCurrentUser
+  loginUser,
+  getCurrentUser,
 } = require("../controllers/user.controllers");
-const {
-  auth
-} = require("../middlewares/auth.middleware");
+const { auth } = require("../middlewares/auth.middleware");
 
 module.exports = (app) => {
-
   var router = require("express").Router();
 
-  router.route("/")
+  router
+    .route("/")
     /**
      * @swagger
      * /users:
@@ -71,9 +69,10 @@ module.exports = (app) => {
      *       500:
      *         description: Internal Server Error
      */
-    .get(getAllUsers)
+    .get(getAllUsers);
 
-  router.route("/:userId")
+  router
+    .route("/:id")
     .put(updateUser)
     .get(getUserById)
 
@@ -100,7 +99,8 @@ module.exports = (app) => {
      */
     .delete(deleteUser);
 
-  router.route("/current")
+  router
+    .route("/current")
     /**
      * @swagger
      * /users/current:
@@ -122,9 +122,10 @@ module.exports = (app) => {
      *       500:
      *         description: Internal Server Error
      */
-    .get(getCurrentUser)
+    .get(getCurrentUser);
 
-  router.route("/login")
+  router
+    .route("/login")
     /**
      * @swagger
      * /users/login:
@@ -143,7 +144,7 @@ module.exports = (app) => {
      *              type: string
      *            password:
      *              type: string
-     *     responses: 
+     *     responses:
      *       200:
      *         description: OK
      *       400:
@@ -155,7 +156,7 @@ module.exports = (app) => {
      *       500:
      *         description: Internal Server Error
      */
-    .post(userLogin)
+    .post(loginUser);
 
   app.use("/api/users", router);
 };
